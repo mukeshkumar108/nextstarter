@@ -6,16 +6,9 @@ export async function getOrCreateUser(params: {
 }) {
   const { clerkUserId, email } = params;
 
-  const existing = await prisma.user.findUnique({
+  return prisma.user.upsert({
     where: { clerkUserId },
-  });
-
-  if (existing) return existing;
-
-  return prisma.user.create({
-    data: {
-      clerkUserId,
-      email: email ?? undefined,
-    },
+    update: { email: email ?? undefined },
+    create: { clerkUserId, email: email ?? undefined },
   });
 }

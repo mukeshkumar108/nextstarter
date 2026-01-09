@@ -57,3 +57,6 @@ pnpm dev
 ## baseline rules
 
 see `BASELINE.md`
+
+## notes
+- Next.js 16 uses proxy.ts (replaces middleware.ts).
