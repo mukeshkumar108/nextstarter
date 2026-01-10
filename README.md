@@ -19,13 +19,23 @@ click **use this template**.
 pnpm install
 vercel link
 ```
+If pnpm blocks postinstall scripts (Prisma), run `pnpm approve-builds` then `pnpm install` again.
 
 ### 3) create storage in vercel
 vercel dashboard → project → storage:
 - create neon postgres
 - create blob
 
-### 4) pull env
+### 4) clerk setup
+create a Clerk application.
+
+add env vars in vercel:
+```
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+CLERK_SECRET_KEY
+```
+
+pull env:
 ```bash
 vercel env pull .env.local
 cp .env.local .env
@@ -44,7 +54,7 @@ pnpm dev
 ## routes
 
 - /app/settings → proves clerk + db mapping
-- POST /api/blob-test → uploads a test blob and returns a public url
+- POST /api/blob-test → uploads a test blob (auth required)
 
 ## baseline rules
 
@@ -52,6 +62,7 @@ see `baseline.md`
 
 ## notes
 - Next.js 16 uses proxy.ts (replaces middleware.ts).
+ - Webhook provisioning: `POST /api/webhooks/clerk`, env `CLERK_WEBHOOK_SECRET`, event `user.created`.
 
 ## environment validation
 Env is validated at boot in `src/env.ts`. Add new variables there and to `.env.example`.
