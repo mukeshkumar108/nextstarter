@@ -1,6 +1,12 @@
 import { prisma } from "./prisma";
 
-export async function getOrCreateUser(params: {
+export async function getUserByClerkId(clerkUserId: string) {
+  return prisma.user.findUnique({
+    where: { clerkUserId },
+  });
+}
+
+export async function upsertUser(params: {
   clerkUserId: string;
   email?: string | null;
 }) {
