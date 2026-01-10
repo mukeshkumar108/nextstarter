@@ -4,7 +4,6 @@ const isPublicRoute = createRouteMatcher([
   "/",                // <- make homepage public (important)
   "/sign-in(.*)",
   "/sign-up(.*)",
-  "/api/blob-test",
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
