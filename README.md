@@ -21,19 +21,11 @@ vercel link
 ```
 
 ### 3) create storage in vercel
-
 vercel dashboard → project → storage:
 - create neon postgres
 - create blob
 
-### 4) add clerk keys in vercel env
-
-add:
-```
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-CLERK_SECRET_KEY
-```
-then pull env:
+### 4) pull env
 ```bash
 vercel env pull .env.local
 cp .env.local .env
@@ -56,7 +48,16 @@ pnpm dev
 
 ## baseline rules
 
-see `BASELINE.md`
+see `baseline.md`
 
 ## notes
 - Next.js 16 uses proxy.ts (replaces middleware.ts).
+
+## environment validation
+Env is validated at boot in `src/env.ts`. Add new variables there and to `.env.example`.
+
+## prisma pooled vs direct connections
+Use pooled URL for app runtime (`POSTGRES_PRISMA_URL`) and direct URL for migrations (`POSTGRES_URL_NON_POOLING`).
+
+## clerk webhook user provisioning
+`user.created` is handled by `POST /api/webhooks/clerk` to upsert the DB user.
